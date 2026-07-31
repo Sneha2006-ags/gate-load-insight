@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as LoadRouteImport } from './routes/load'
 import { Route as RfidRouteImport } from './routes/rfid'
+import { Route as SettingsRouteImport } from './routes/settings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const RfidRoute = RfidRouteImport.update({
   path: '/rfid',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/load': typeof LoadRoute
   '/rfid': typeof RfidRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/load': typeof LoadRoute
   '/rfid': typeof RfidRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/history': typeof HistoryRoute
   '/load': typeof LoadRoute
   '/rfid': typeof RfidRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/history' | '/load' | '/rfid'
+  fullPaths: '/' | '/history' | '/load' | '/rfid' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/history' | '/load' | '/rfid'
-  id: '__root__' | '/' | '/history' | '/load' | '/rfid'
+  to: '/' | '/history' | '/load' | '/rfid' | '/settings'
+  id: '__root__' | '/' | '/history' | '/load' | '/rfid' | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   HistoryRoute: typeof HistoryRoute
   LoadRoute: typeof LoadRoute
   RfidRoute: typeof RfidRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RfidRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   HistoryRoute: HistoryRoute,
   LoadRoute: LoadRoute,
   RfidRoute: RfidRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
